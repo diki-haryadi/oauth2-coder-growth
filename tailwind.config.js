@@ -23,6 +23,8 @@ export default {
       animation: {
         'gradient': 'gradient 8s linear infinite',
         'float': 'float 6s ease-in-out infinite',
+        scroll: 'scroll 40s linear infinite',
+        'scroll-reverse': 'scroll-reverse 40s linear infinite'
       },
       keyframes: {
         gradient: {
@@ -43,6 +45,14 @@ export default {
             transform: 'translateY(-20px)',
           },
         },
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' }
+        },
+        'scroll-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' }
+        }
       },
     },
   },

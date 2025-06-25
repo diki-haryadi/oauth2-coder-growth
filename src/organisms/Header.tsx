@@ -144,7 +144,7 @@ const Header = () => {
               <NavLink href="#">
                 Blog
               </NavLink>
-              <NavLink href="#">
+              <NavLink href="/pricing">
                 Pricing
               </NavLink>
             </div>
