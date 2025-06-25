@@ -1,7 +1,22 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import NavLink from '../atoms/NavLink';
+import DevelopersMenu from './DevelopersMenu';
+import DocumentationMenu from './DocumentationMenu';
+import ProductMenu from './ProductMenu';
+import SolutionsMenu from './SolutionsMenu';
 
 const Header = () => {
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+
+  const handleMouseEnter = (menu: string) => {
+    setActiveSubmenu(menu);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveSubmenu(null);
+  };
+
   return (
     <div className="fixed top-0 left-0 right-0 z-50">
       {/* Top Banner */}
@@ -38,24 +53,100 @@ const Header = () => {
 
             {/* Navigation Links */}
             <div className="hidden md:flex md:items-center md:space-x-8">
-              <a href="#" className="text-gray-300 hover:text-white">
-                Developers
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
-                Documentation
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
-                Product
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
-                Solutions
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+              <div 
+                onMouseEnter={() => handleMouseEnter('developers')}
+                onMouseLeave={handleMouseLeave}
+                className="relative"
+              >
+                <NavLink href="#" hasSubmenu>
+                  Developers
+                </NavLink>
+                <AnimatePresence>
+                  {activeSubmenu === 'developers' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <DevelopersMenu />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              
+              <div 
+                onMouseEnter={() => handleMouseEnter('documentation')}
+                onMouseLeave={handleMouseLeave}
+                className="relative"
+              >
+                <NavLink href="#" hasSubmenu>
+                  Documentation
+                </NavLink>
+                <AnimatePresence>
+                  {activeSubmenu === 'documentation' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <DocumentationMenu />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div 
+                onMouseEnter={() => handleMouseEnter('product')}
+                onMouseLeave={handleMouseLeave}
+                className="relative"
+              >
+                <NavLink href="#" hasSubmenu>
+                  Product
+                </NavLink>
+                <AnimatePresence>
+                  {activeSubmenu === 'product' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <ProductMenu />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <div 
+                onMouseEnter={() => handleMouseEnter('solutions')}
+                onMouseLeave={handleMouseLeave}
+                className="relative"
+              >
+                <NavLink href="#" hasSubmenu>
+                  Solutions
+                </NavLink>
+                <AnimatePresence>
+                  {activeSubmenu === 'solutions' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <SolutionsMenu />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              <NavLink href="#">
                 Blog
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white">
+              </NavLink>
+              <NavLink href="#">
                 Pricing
-              </a>
+              </NavLink>
             </div>
 
             {/* CTA Buttons */}
@@ -76,6 +167,8 @@ const Header = () => {
           </div>
         </nav>
       </header>
+
+      {/* Mobile menu would go here */}
     </div>
   );
 };
