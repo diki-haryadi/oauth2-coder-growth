@@ -85,3 +85,23 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* Toggle Switch */
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #635DFF;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #635DFF;
+}
+
+.toggle-label {
+  transition: background-color 0.2s ease-in;
+}
+
+.toggle-checkbox {
+  transition: all 0.2s ease-in;
+  right: 50%;
+  border-color: #E5E7EB;
+}

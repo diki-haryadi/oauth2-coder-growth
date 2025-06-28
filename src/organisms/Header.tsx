@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import NavLink from '../atoms/NavLink';
 import DevelopersMenu from './DevelopersMenu';
 import DocumentationMenu from './DocumentationMenu';
@@ -24,14 +25,14 @@ const Header = () => {
         <div className="mx-auto max-w-7xl flex items-center justify-between text-sm">
           <div className="flex items-center space-x-2">
             <span className="text-white">Auth for GenAI, available now in Developer Preview.</span>
-            <a href="#" className="text-white underline hover:no-underline">
+            <Link to="/u/signup" className="text-white underline hover:no-underline">
               Get started →
-            </a>
+            </Link>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="#" className="text-white hover:text-gray-300">
+            <Link to="/u/login" className="text-white hover:text-gray-300">
               Login
-            </a>
+            </Link>
             <div className="flex items-center space-x-1">
               <span className="text-white">English</span>
               <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,7 +49,9 @@ const Header = () => {
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <img src="/logo.svg" alt="AuthG" className="h-8 w-auto" />
+              <Link to="/">
+                <img src="/logo.svg" alt="AuthG" className="h-8 w-auto" />
+              </Link>
             </div>
 
             {/* Navigation Links */}
