@@ -67,7 +67,7 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/quickstart" element={<ApplicationQuickstart />} />
           <Route path="/credentials" element={<Settings />} />
-          <Route path="/apis" element={<Settings />} />
+          {/* <Route path="/dashboard/au/:environment/apis" element={<Apis />} /> */}
           <Route path="/addons" element={<Settings />} />
           <Route path="/connections" element={<Settings />} />
           <Route path="/login-experience" element={<Settings />} />

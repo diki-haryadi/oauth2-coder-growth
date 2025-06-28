@@ -48,7 +48,7 @@ const menuItems: MenuItem[] = [
       },
       {
         label: 'APIs',
-        path: '/dashboard/apis'
+        path: '/dashboard/au/dev/apis'
       },
       {
         label: 'SSO Integrations',
@@ -275,4 +275,4 @@ const DashboardSidebar = () => {
   );
 };
 
-export default DashboardSidebar; 
+export default DashboardSidebar;
