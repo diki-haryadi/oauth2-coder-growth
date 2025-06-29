@@ -1,9 +1,40 @@
-import { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
+const mockUser = {
+  name: 'Diki Haryadi',
+  email: 'dk.harryadi@gmail.com',
+  avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+};
+const mockTenant = {
+  id: 'dev-1md8m8doz8ynfucb',
+  flag: '🇦🇺',
+  env: 'DEVELOPMENT',
+  team: 'team-ekvvhxl',
+};
+const mockLanguages = [
+  { label: 'English (US)', value: 'en', checked: true },
+  { label: 'Français (CA)', value: 'fr', checked: false, beta: true },
+  { label: '日本語', value: 'jp', checked: false, beta: true },
+];
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [tenantOpen, setTenantOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const [docOpen, setDocOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Close popovers on outside click
+  const tenantRef = useRef(null);
+  const userRef = useRef(null);
+  const langRef = useRef(null);
+  const notifRef = useRef(null);
+  const docRef = useRef(null);
+  const searchRef = useRef(null);
 
   return (
     <motion.nav 

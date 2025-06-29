@@ -25,27 +25,14 @@ import ApiSettings from './pages/ApiSettings';
 import SSOIntegrations from './pages/SSOIntegrations';
 import SSOCreateIntegration from './pages/SSOCreateIntegration';
 import SSOChooseIntegration from './pages/SSOChooseIntegration';
+import DashboardLayout from './pages/DashboardLayout';
 
 const App = () => {
   return (
     <Router>
       <div className="min-h-screen bg-[#0A1122]">
         <Routes>
-          {/* Auth Routes */}
-          <Route path="/u/login" element={<Login />} />
-          <Route path="/u/signup" element={<Signup />} />
-          <Route path="/u/s/signup" element={<SignupPassword />} />
-          <Route path="/u/verify" element={<VerifyIdentity />} />
-          <Route path="/u/verify/methods" element={<VerifyMethods />} />
-          <Route path="/u/device" element={<DeviceRegistration />} />
-          <Route path="/u/device/success" element={<DeviceSuccess />} />
-          <Route path="/dashboard/*" element={<Dashboard />} />
-          <Route path="/dashboard/au/insights" element={<ActivityInsights />} />
-          <Route path="/dashboard/applications" element={<Applications />} />
-          <Route path="/dashboard/applications/:clientId/quickstart" element={<ApplicationQuickstart />} />
-          <Route path="/activity" element={<ActivityInsights />} />
-          {/* <Route path="/dashboard/au/:tenantId/insights" element={<ActivityInsights />} /> */}
-
+       
           {/* Main Routes */}
           <Route path="/pricing" element={
             <>
@@ -69,17 +56,35 @@ const App = () => {
           } />
 
           {/* New Routes */}
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/quickstart" element={<ApplicationQuickstart />} />
-          <Route path="/credentials" element={<Settings />} />
-          <Route path="/dashboard/au/:environment/apis" element={<Apis />} />
-          <Route path="/addons" element={<Settings />} />
-          <Route path="/connections" element={<Settings />} />
-          <Route path="/login-experience" element={<Settings />} />
-          <Route path="/dashboard/au/dev-1md8m8doz8ynfucb/apis/679657da55b41ef859333806/settings" element={<ApiSettings />} />
-          <Route path="/dashboard/au/:environment/externalapps" element={<SSOIntegrations />} />
-          <Route path="/dashboard/au/dev-1md8m8doz8ynfucb/externalapps/create" element={<SSOCreateIntegration />} />
-          <Route path="/dashboard/au/dev-1md8m8doz8ynfucb/externalapps/create/:url_slug" element={<SSOChooseIntegration />} />
+          {/* Auth Routes */}
+          <Route path="/u/login" element={<Login />} />
+          <Route path="/u/signup" element={<Signup />} />
+          <Route path="/u/s/signup" element={<SignupPassword />} />
+          <Route path="/u/verify" element={<VerifyIdentity />} />
+          <Route path="/u/verify/methods" element={<VerifyMethods />} />
+          <Route path="/u/device" element={<DeviceRegistration />} />
+          <Route path="/u/device/success" element={<DeviceSuccess />} />
+
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="au/insights" element={<ActivityInsights />} />
+            <Route path="applications" element={<Applications />} />
+            <Route path="applications/:clientId/quickstart" element={<ApplicationQuickstart />} />
+            <Route path="activity" element={<ActivityInsights />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="quickstart" element={<ApplicationQuickstart />} />
+            <Route path="credentials" element={<Settings />} />
+            <Route path="au/:environment/apis" element={<Apis />} />
+            <Route path="addons" element={<Settings />} />
+            <Route path="connections" element={<Settings />} />
+            <Route path="login-experience" element={<Settings />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/apis/679657da55b41ef859333806/settings" element={<ApiSettings />} />
+            <Route path="au/:environment/externalapps" element={<SSOIntegrations />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/externalapps/create" element={<SSOCreateIntegration />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/externalapps/create/:url_slug" element={<SSOChooseIntegration />} />
+          </Route>
+
+          
         </Routes>
       </div>
     </Router>
