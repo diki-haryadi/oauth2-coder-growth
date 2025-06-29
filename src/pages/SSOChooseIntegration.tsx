@@ -25,7 +25,6 @@ const SSOChooseIntegration = () => {
   if (!integration) {
     return (
       <div className="flex min-h-screen w-screen bg-gray-50">
-        <DashboardSidebar />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center text-gray-500">Integration not found.</div>
         </div>
@@ -129,7 +128,6 @@ const SSOChooseIntegration = () => {
   // Main render logic
   return (
     <div className="flex min-h-screen w-screen bg-gray-50">
-      <DashboardSidebar />
       <div className="flex-1 min-w-0 relative">
         <main className="w-full h-[calc(100vh-64px)] overflow-y-auto">
           {step !== 'tutorial' ? (

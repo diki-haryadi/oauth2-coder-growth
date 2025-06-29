@@ -421,7 +421,6 @@ const ApplicationQuickstart = () => {
 
   return (
     <div className="flex min-h-screen w-screen bg-gray-50">
-      <DashboardSidebar />
       
       <div className="flex-1 bg-white">
         <div className="px-10 py-8">

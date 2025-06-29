@@ -604,7 +604,6 @@ puts response.read_body`
 
   return (
     <div className="flex min-h-screen w-screen bg-gray-50">
-      <DashboardSidebar />
       <div className="flex-1 min-w-0 relative">
         <main className="w-full h-[calc(100vh-64px)] overflow-y-auto">
           <div className="px-12 py-10">

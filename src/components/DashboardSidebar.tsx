@@ -176,15 +176,6 @@ const DashboardSidebar = () => {
   return (
     <aside className="flex-none w-64 bg-white border-r border-gray-200 h-screen overflow-y-auto">
       <div className="p-4">
-        <div className="flex items-center space-x-2 mb-8">
-          <span className="bg-gray-200 w-8 h-8 flex items-center justify-center rounded-md text-gray-700 font-medium">
-            T
-          </span>
-          <div className="flex items-center space-x-1 bg-blue-100 px-2 py-1 rounded text-sm">
-            <span className="text-blue-700">dev-1md8m8doz8ynfucb</span>
-            <span className="bg-blue-600 text-white text-xs px-1.5 py-0.5 rounded">DEVELOPMENT</span>
-          </div>
-        </div>
 
         <nav>
           <ul className="space-y-1">
