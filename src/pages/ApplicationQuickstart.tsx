@@ -475,142 +475,142 @@ const ApplicationQuickstart = () => {
 
           {activeTab === 'Quickstart' && (
             selectedTechnology ? (
-              <div className="mt-6">
-                <button
-                  onClick={() => setSelectedTechnology(null)}
-                  className="flex items-center bg-[#2A2A2A] hover:bg-[#3A3A3A] text-[#CCCCCC] text-base mb-8 font-normal rounded-md px-4 py-2"
-                >
-                  <svg className="w-5 h-5 mr-2 stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                  <span>Change Technology</span>
-                </button>
+            <div className="mt-6">
+              <button
+                onClick={() => setSelectedTechnology(null)}
+                className="flex items-center bg-[#2A2A2A] hover:bg-[#3A3A3A] text-[#CCCCCC] text-base mb-8 font-normal rounded-md px-4 py-2"
+              >
+                <svg className="w-5 h-5 mr-2 stroke-current" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                <span>Change Technology</span>
+              </button>
 
-                <div className="grid grid-cols-2 gap-8 mb-8">
-                  <div className="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 className="text-xl font-semibold mb-4 text-[#1A1A1A]">I want to integrate with my app</h2>
-                    <div className="flex items-center text-sm text-[#6E6E6E] mb-6">
-                      <svg className="w-4 h-4 mr-2 stroke-current" viewBox="0 0 24 24" fill="none">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      {selectedTechnology.timeEstimate}
-                    </div>
-                    <div className="space-y-3">
-                      {[
-                        'Configure Auth0',
-                        `Configure ${selectedTechnology.name} to Use Auth0`,
-                        'Logging In',
-                        'Handling Authentication Callback',
-                        'Displaying User Information',
-                        'Logging Out'
-                      ].map((step, index) => (
-                        <a
-                          key={step}
-                          href={`#${step.toLowerCase().replace(/\s+/g, '-')}`}
-                          className="flex items-center text-[#635DFF] hover:text-[#3B3684]"
-                        >
-                          <span className="w-6 h-6 rounded-full bg-[#F5F5F5] flex items-center justify-center text-sm mr-3 text-[#6E6E6E]">
-                            {index + 1}
-                          </span>
-                          <span className="text-sm">{step}</span>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 className="text-xl font-semibold mb-4 text-[#1A1A1A]">I want to explore a sample app</h2>
-                    <div className="flex items-center text-sm text-[#6E6E6E] mb-6">
-                      <svg className="w-4 h-4 mr-2 stroke-current" viewBox="0 0 24 24" fill="none">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      2 MINUTES
-                    </div>
-                    <p className="text-[#6E6E6E] text-sm mb-6">
-                      Get a sample configured with your account settings or check it out on Github.
-                    </p>
-                    <button className="w-full py-2 bg-[#635DFF] text-white rounded text-sm font-medium hover:bg-[#3B3684]">
-                      DOWNLOAD SAMPLE
-                    </button>
-                  </div>
-                </div>
-
-                <div className="bg-[#F5F5F5] border border-gray-200 rounded p-4 mb-8">
-                  <div className="flex items-start">
-                    <svg className="w-5 h-5 text-[#6E6E6E] mt-0.5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              <div className="grid grid-cols-2 gap-8 mb-8">
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-[#1A1A1A]">I want to integrate with my app</h2>
+                  <div className="flex items-center text-sm text-[#6E6E6E] mb-6">
+                    <svg className="w-4 h-4 mr-2 stroke-current" viewBox="0 0 24 24" fill="none">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <div>
-                      <p className="text-sm text-[#6E6E6E]">
-                        New to Auth0? Learn <a href="#" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">How Auth0 works</a>,
-                        how it <a href="#" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">integrates with Regular Web Applications</a> and
-                        which <a href="#" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">protocol</a> it uses.
-                      </p>
-                    </div>
+                    {selectedTechnology.timeEstimate}
                   </div>
-                </div>
-
-                <div className="prose max-w-none">
-                  <h2 className="text-[#1A1A1A] text-2xl font-semibold mb-4">Configure Auth0</h2>
-                  <h3 className="text-[#1A1A1A] text-xl font-semibold mb-3">Get Your Application Keys</h3>
-                  <p className="text-[#6E6E6E]">
-                    When you signed up for Auth0, a new application was created for you, or you could have created a new one.
-                    You will need some details about that application to communicate with Auth0. You can get these details from
-                    the <a href="https://manage.auth0.com/#/applications" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">Application Settings</a> section
-                    in the Auth0 dashboard.
-                  </p>
-                </div>
-              </div>
-            ) : (
-              <div className="mt-8 bg-white rounded-lg p-6">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                  What technology are you using for your project?
-                </h2>
-
-                <div className="mb-8">
-                  <div className="max-w-xl relative">
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Search by technology name"
-                        className="w-full pl-10 pr-4 py-2.5 bg-white text-gray-900 placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-200"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                      />
-                      <svg
-                        className="absolute left-3 top-3 w-5 h-5 text-gray-400"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
+                  <div className="space-y-3">
+                    {[
+                      'Configure Auth0',
+                      `Configure ${selectedTechnology.name} to Use Auth0`,
+                      'Logging In',
+                      'Handling Authentication Callback',
+                      'Displaying User Information',
+                      'Logging Out'
+                    ].map((step, index) => (
+                      <a
+                        key={step}
+                        href={`#${step.toLowerCase().replace(/\s+/g, '-')}`}
+                        className="flex items-center text-[#635DFF] hover:text-[#3B3684]"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    </div>
+                        <span className="w-6 h-6 rounded-full bg-[#F5F5F5] flex items-center justify-center text-sm mr-3 text-[#6E6E6E]">
+                          {index + 1}
+                        </span>
+                        <span className="text-sm">{step}</span>
+                      </a>
+                    ))}
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredTechnologies.map((tech) => (
-                    <button
-                      key={tech.id}
-                      onClick={() => setSelectedTechnology(tech)}
-                      className={`flex items-center space-x-3 p-4 rounded-lg focus:outline-none ${
-                        tech.id === 'flutter' 
-                          ? 'border border-blue-600 bg-white' 
-                          : 'border border-gray-200 bg-white hover:border-blue-600'
-                      }`}
-                    >
-                      <img src={tech.icon} alt={tech.name} className="w-8 h-8" />
-                      <span className="text-gray-900 text-left">{tech.name}</span>
-                    </button>
-                  ))}
+                <div className="bg-white rounded-lg border border-gray-200 p-6">
+                  <h2 className="text-xl font-semibold mb-4 text-[#1A1A1A]">I want to explore a sample app</h2>
+                  <div className="flex items-center text-sm text-[#6E6E6E] mb-6">
+                    <svg className="w-4 h-4 mr-2 stroke-current" viewBox="0 0 24 24" fill="none">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    2 MINUTES
+                  </div>
+                  <p className="text-[#6E6E6E] text-sm mb-6">
+                    Get a sample configured with your account settings or check it out on Github.
+                  </p>
+                  <button className="w-full py-2 bg-[#635DFF] text-white rounded text-sm font-medium hover:bg-[#3B3684]">
+                    DOWNLOAD SAMPLE
+                  </button>
                 </div>
               </div>
+
+              <div className="bg-[#F5F5F5] border border-gray-200 rounded p-4 mb-8">
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 text-[#6E6E6E] mt-0.5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <div>
+                    <p className="text-sm text-[#6E6E6E]">
+                      New to Auth0? Learn <a href="#" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">How Auth0 works</a>,
+                      how it <a href="#" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">integrates with Regular Web Applications</a> and
+                      which <a href="#" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">protocol</a> it uses.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="prose max-w-none">
+                <h2 className="text-[#1A1A1A] text-2xl font-semibold mb-4">Configure Auth0</h2>
+                <h3 className="text-[#1A1A1A] text-xl font-semibold mb-3">Get Your Application Keys</h3>
+                <p className="text-[#6E6E6E]">
+                  When you signed up for Auth0, a new application was created for you, or you could have created a new one.
+                  You will need some details about that application to communicate with Auth0. You can get these details from
+                  the <a href="https://manage.auth0.com/#/applications" className="text-[#635DFF] hover:text-[#3B3684] hover:underline">Application Settings</a> section
+                  in the Auth0 dashboard.
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-8 bg-white rounded-lg p-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                What technology are you using for your project?
+              </h2>
+
+              <div className="mb-8">
+                <div className="max-w-xl relative">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search by technology name"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white text-gray-900 placeholder-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-200"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <svg
+                      className="absolute left-3 top-3 w-5 h-5 text-gray-400"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredTechnologies.map((tech) => (
+                  <button
+                    key={tech.id}
+                    onClick={() => setSelectedTechnology(tech)}
+                    className={`flex items-center space-x-3 p-4 rounded-lg focus:outline-none ${
+                      tech.id === 'flutter' 
+                        ? 'border border-blue-600 bg-white' 
+                        : 'border border-gray-200 bg-white hover:border-blue-600'
+                    }`}
+                  >
+                    <img src={tech.icon} alt={tech.name} className="w-8 h-8" />
+                    <span className="text-gray-900 text-left">{tech.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
             )
           )}
 

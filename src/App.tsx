@@ -20,6 +20,11 @@ import ActivityInsights from './pages/ActivityInsights';
 import Applications from './pages/Applications';
 import ApplicationQuickstart from './pages/ApplicationQuickstart';
 import Settings from './pages/Settings';
+import Apis from './pages/Apis';
+import ApiSettings from './pages/ApiSettings';
+import SSOIntegrations from './pages/SSOIntegrations';
+import SSOCreateIntegration from './pages/SSOCreateIntegration';
+import SSOChooseIntegration from './pages/SSOChooseIntegration';
 
 const App = () => {
   return (
@@ -67,10 +72,14 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/quickstart" element={<ApplicationQuickstart />} />
           <Route path="/credentials" element={<Settings />} />
-          {/* <Route path="/dashboard/au/:environment/apis" element={<Apis />} /> */}
+          <Route path="/dashboard/au/:environment/apis" element={<Apis />} />
           <Route path="/addons" element={<Settings />} />
           <Route path="/connections" element={<Settings />} />
           <Route path="/login-experience" element={<Settings />} />
+          <Route path="/dashboard/au/dev-1md8m8doz8ynfucb/apis/679657da55b41ef859333806/settings" element={<ApiSettings />} />
+          <Route path="/dashboard/au/:environment/externalapps" element={<SSOIntegrations />} />
+          <Route path="/dashboard/au/dev-1md8m8doz8ynfucb/externalapps/create" element={<SSOCreateIntegration />} />
+          <Route path="/dashboard/au/dev-1md8m8doz8ynfucb/externalapps/create/:url_slug" element={<SSOChooseIntegration />} />
         </Routes>
       </div>
     </Router>

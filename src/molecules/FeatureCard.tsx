@@ -22,15 +22,15 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, icon, gra
       transition={{ type: "spring", stiffness: 300 }}
     >
       <motion.div
-        className="text-white text-4xl"
+        className="text-4xl"
         animate={{ scale: [1, 1.1, 1] }}
         transition={{ repeat: Infinity, duration: 4 }}
       >
         {icon}
       </motion.div>
       <div>
-        <h3 className="text-white text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-200 text-sm">{description}</p>
+        <h3 className="text-black text-xl font-semibold mb-2">{title}</h3>
+        <p className="text-gray-700 text-sm">{description}</p>
       </div>
     </motion.div>
   )

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 
 interface MenuItem {
   icon: JSX.Element;
@@ -52,7 +52,7 @@ const menuItems: MenuItem[] = [
       },
       {
         label: 'SSO Integrations',
-        path: '/dashboard/sso-integrations'
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/externalapps'
       }
     ]
   },
