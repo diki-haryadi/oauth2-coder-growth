@@ -26,6 +26,8 @@ import SSOIntegrations from './pages/SSOIntegrations';
 import SSOCreateIntegration from './pages/SSOCreateIntegration';
 import SSOChooseIntegration from './pages/SSOChooseIntegration';
 import DashboardLayout from './pages/DashboardLayout';
+import DatabaseConnections from './pages/DatabaseConnections';
+import DatabaseConnectionsNew from './pages/DatabaseConnectionsNew';
 
 const App = () => {
   return (
@@ -78,10 +80,12 @@ const App = () => {
             <Route path="addons" element={<Settings />} />
             <Route path="connections" element={<Settings />} />
             <Route path="login-experience" element={<Settings />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/database" element={<DatabaseConnections />} />
             <Route path="au/dev-1md8m8doz8ynfucb/apis/679657da55b41ef859333806/settings" element={<ApiSettings />} />
             <Route path="au/:environment/externalapps" element={<SSOIntegrations />} />
             <Route path="au/dev-1md8m8doz8ynfucb/externalapps/create" element={<SSOCreateIntegration />} />
             <Route path="au/dev-1md8m8doz8ynfucb/externalapps/create/:url_slug" element={<SSOChooseIntegration />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/database/new" element={<DatabaseConnectionsNew />} />
           </Route>
 
           

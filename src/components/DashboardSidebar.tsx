@@ -64,7 +64,29 @@ const menuItems: MenuItem[] = [
     ),
     label: 'Authentication',
     path: '/dashboard/authentication',
-    hasSubmenu: true
+    hasSubmenu: true,
+    submenuItems: [
+      {
+        label: 'Database',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/connections/database',
+      },
+      {
+        label: 'Social',
+        path: '/dashboard/authentication/social',
+      },
+      {
+        label: 'Enterprise',
+        path: '/dashboard/authentication/enterprise',
+      },
+      {
+        label: 'Passwordless',
+        path: '/dashboard/authentication/passwordless',
+      },
+      {
+        label: 'Authentication Profile',
+        path: '/dashboard/authentication/profile',
+      },
+    ]
   },
   {
     icon: (
@@ -174,7 +196,7 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <aside className="flex-none w-64 bg-white border-r border-gray-200 h-screen overflow-y-auto">
+    <aside className="min-h-screen flex-none w-64 bg-white border-r border-gray-200 h-screen overflow-y-auto">
       <div className="p-4">
 
         <nav>
