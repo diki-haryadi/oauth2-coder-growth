@@ -7,9 +7,9 @@ export default function DashboardLayout({ children }: { children?: ReactNode }) 
   return (
     <>
       <Navbar />
-      <div className="flex pt-14">
+      <div className="flex h-screen">
         <Sidebar />
-        <main className="flex-1">
+        <main className="flex-1 pt-14">
           {children}
           <Outlet />
         </main>

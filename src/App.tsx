@@ -28,6 +28,9 @@ import SSOChooseIntegration from './pages/SSOChooseIntegration';
 import DashboardLayout from './pages/DashboardLayout';
 import DatabaseConnections from './pages/DatabaseConnections';
 import DatabaseConnectionsNew from './pages/DatabaseConnectionsNew';
+import DatabaseConnectionSettings from './pages/DatabaseConnectionSettings';
+import SocialConnections from './pages/SocialConnections';
+import SocialConnectionsCreate from './pages/SocialConnectionsCreate';
 
 const App = () => {
   return (
@@ -86,6 +89,11 @@ const App = () => {
             <Route path="au/dev-1md8m8doz8ynfucb/externalapps/create" element={<SSOCreateIntegration />} />
             <Route path="au/dev-1md8m8doz8ynfucb/externalapps/create/:url_slug" element={<SSOChooseIntegration />} />
             <Route path="au/dev-1md8m8doz8ynfucb/connections/database/new" element={<DatabaseConnectionsNew />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/database/:connectionId/settings" element={<DatabaseConnectionSettings />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/social" element={<SocialConnections />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/social/create" element={<SocialConnectionsCreate/>} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/social/create/:social/permissions" element={<SocialConnectionsCreate step="permissions" />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/social/create/:social/setup" element={<SocialConnectionsCreate step="setup" />} />
           </Route>
 
           

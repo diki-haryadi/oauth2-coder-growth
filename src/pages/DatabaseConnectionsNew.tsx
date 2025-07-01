@@ -19,6 +19,15 @@ export default function DatabaseConnectionsNew() {
   const [methods, setMethods] = useState([true, false]);
   const [disableSignups, setDisableSignups] = useState(false);
 
+  const isNameValid = name && /^[a-zA-Z0-9][a-zA-Z0-9-]{0,33}[a-zA-Z0-9]$/.test(name);
+
+  const handleCreate = () => {
+    if (!isNameValid) return;
+    // Simulate creation and redirect
+    const connectionId = 'con_' + name.toLowerCase().replace(/[^a-z0-9]/g, '');
+    navigate(`/dashboard/au/dev-1md8m8doz8ynfucb/connections/database/${connectionId}/settings`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 w-screen flex flex-row pt-12 px-0 pl-64">
       <div className="w-full max-w-2xl bg-white">
@@ -102,7 +111,13 @@ export default function DatabaseConnectionsNew() {
           {/* Buttons */}
           <div className="flex justify-end gap-3 mt-8">
             <button className="px-6 py-2 rounded border border-gray-300 bg-white text-gray-700 font-medium">Cancel</button>
-            <button className="px-6 py-2 rounded bg-gray-200 text-gray-400 font-semibold cursor-not-allowed" disabled>Create</button>
+            <button
+              className={`px-6 py-2 rounded font-semibold ${isNameValid ? 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+              disabled={!isNameValid}
+              onClick={handleCreate}
+            >
+              Create
+            </button>
           </div>
         </div>
       </div>

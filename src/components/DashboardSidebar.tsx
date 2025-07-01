@@ -72,7 +72,7 @@ const menuItems: MenuItem[] = [
       },
       {
         label: 'Social',
-        path: '/dashboard/authentication/social',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/connections/social',
       },
       {
         label: 'Enterprise',
@@ -196,7 +196,7 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <aside className="min-h-screen flex-none w-64 bg-white border-r border-gray-200 h-screen overflow-y-auto">
+    <aside className="h-screen flex-none w-64 bg-white border-r border-gray-200 overflow-y-auto">
       <div className="p-4">
 
         <nav>
