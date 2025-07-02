@@ -80,7 +80,7 @@ const menuItems: MenuItem[] = [
       },
       {
         label: 'Passwordless',
-        path: '/dashboard/authentication/passwordless',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/connections/passwordless',
       },
       {
         label: 'Authentication Profile',

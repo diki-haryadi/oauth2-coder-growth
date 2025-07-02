@@ -35,6 +35,7 @@ import SocialConnectionPermissions from './pages/SocialConnectionPermissions';
 import EnterpriseConnections from './pages/EnterpriseConnections';
 import SAMLConnectionsPage from './pages/SAMLConnectionsPage';
 import SAMLCreateConnectionPage from './pages/SAMLCreateConnectionPage';
+import PasswordlessConnectionsPage from './pages/PasswordlessConnectionsPage';
 
 const App = () => {
   return (
@@ -101,6 +102,7 @@ const App = () => {
             <Route path="au/dev-1md8m8doz8ynfucb/connections/enterprise" element={<EnterpriseConnections />} />
             <Route path="au/dev-1md8m8doz8ynfucb/connections/enterprise/saml" element={<SAMLConnectionsPage />} />
             <Route path="au/dev-1md8m8doz8ynfucb/connections/enterprise/saml/create" element={<SAMLCreateConnectionPage />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/passwordless" element={<PasswordlessConnectionsPage />} />
           </Route>
 
           
