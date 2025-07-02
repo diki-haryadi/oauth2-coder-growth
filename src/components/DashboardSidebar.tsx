@@ -76,7 +76,7 @@ const menuItems: MenuItem[] = [
       },
       {
         label: 'Enterprise',
-        path: '/dashboard/authentication/enterprise',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/connections/enterprise',
       },
       {
         label: 'Passwordless',

@@ -31,6 +31,10 @@ import DatabaseConnectionsNew from './pages/DatabaseConnectionsNew';
 import DatabaseConnectionSettings from './pages/DatabaseConnectionSettings';
 import SocialConnections from './pages/SocialConnections';
 import SocialConnectionsCreate from './pages/SocialConnectionsCreate';
+import SocialConnectionPermissions from './pages/SocialConnectionPermissions';
+import EnterpriseConnections from './pages/EnterpriseConnections';
+import SAMLConnectionsPage from './pages/SAMLConnectionsPage';
+import SAMLCreateConnectionPage from './pages/SAMLCreateConnectionPage';
 
 const App = () => {
   return (
@@ -92,8 +96,11 @@ const App = () => {
             <Route path="au/dev-1md8m8doz8ynfucb/connections/database/:connectionId/settings" element={<DatabaseConnectionSettings />} />
             <Route path="au/dev-1md8m8doz8ynfucb/connections/social" element={<SocialConnections />} />
             <Route path="au/dev-1md8m8doz8ynfucb/connections/social/create" element={<SocialConnectionsCreate/>} />
-            <Route path="au/dev-1md8m8doz8ynfucb/connections/social/create/:social/permissions" element={<SocialConnectionsCreate step="permissions" />} />
             <Route path="au/dev-1md8m8doz8ynfucb/connections/social/create/:social/setup" element={<SocialConnectionsCreate step="setup" />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/social/create/:slug" element={<SocialConnectionPermissions />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/enterprise" element={<EnterpriseConnections />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/enterprise/saml" element={<SAMLConnectionsPage />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/connections/enterprise/saml/create" element={<SAMLCreateConnectionPage />} />
           </Route>
 
           
