@@ -196,7 +196,7 @@ const DashboardSidebar = () => {
   };
 
   return (
-    <aside className="h-screen flex-none w-64 bg-white border-r border-gray-200 overflow-y-auto">
+    <aside className="h-screen flex-none w-64 bg-white border-r border-gray-200 overflow-y-auto ">
       <div className="p-4">
 
         <nav>
