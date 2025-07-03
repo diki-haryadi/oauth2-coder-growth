@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function RolesPage() {
   const [showCreate, setShowCreate] = useState(false);
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
+  const navigate = useNavigate();
+
+  const handleCreate = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Simulasi ID role baru
+    const newRoleId = 'rol_ljWb5fuUVta4ZEwD';
+    setShowCreate(false);
+    setName('');
+    setDesc('');
+    navigate(`/dashboard/au/dev-1md8m8doz8ynfucb/roles/${newRoleId}/settings`);
+  };
 
   return (
-    <div className="min-h-screen bg-white w-full p-8">
+    <div className="min-h-screen bg-white w-screen p-8">
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -39,7 +51,7 @@ export default function RolesPage() {
                 <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" /></svg>
               </button>
               <h2 className="text-2xl font-bold mb-6">New Role</h2>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleCreate}>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                   <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" value={name} onChange={e => setName(e.target.value)} />

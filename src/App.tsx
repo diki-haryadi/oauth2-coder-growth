@@ -42,6 +42,7 @@ import OrganizationsCreatePage from './pages/OrganizationsCreatePage';
 import OrganizationsOverviewPage from './pages/OrganizationsOverviewPage';
 import UsersPage from './pages/UsersPage';
 import RolesPage from './pages/RolesPage';
+import RoleSettingsPage from './pages/RoleSettingsPage';
 
 const App = () => {
   return (
@@ -115,6 +116,7 @@ const App = () => {
             <Route path="au/dev-1md8m8doz8ynfucb/organizations/:orgId/overview" element={<OrganizationsOverviewPage />} />
             <Route path="au/dev-1md8m8doz8ynfucb/users" element={<UsersPage />} />
             <Route path="au/dev-1md8m8doz8ynfucb/roles" element={<RolesPage />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/roles/:roleId/settings" element={<RoleSettingsPage />} />
           </Route>
 
           
