@@ -112,8 +112,18 @@ const menuItems: MenuItem[] = [
       </svg>
     ),
     label: 'User Management',
-    path: '/dashboard/users',
-    hasSubmenu: true
+    path: '/dashboard',
+    hasSubmenu: true,
+    submenuItems: [
+      {
+        label: 'Users',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/users',
+      },
+      {
+        label: 'Roles',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/roles',
+      },
+    ]
   },
   {
     icon: (
@@ -123,47 +133,33 @@ const menuItems: MenuItem[] = [
     ),
     label: 'Branding',
     path: '/dashboard/branding',
-    hasSubmenu: true
+    hasSubmenu: true,
+    submenuItems: [
+      { label: 'Universal Login', path: '/dashboard/branding/universal-login' },
+      { label: 'Custom Domains', path: '/dashboard/branding/custom-domains' },
+      { label: 'Email Templates', path: '/dashboard/branding/email-templates' },
+      { label: 'Email Provider', path: '/dashboard/branding/email-provider' },
+      { label: 'Phone Templates', path: '/dashboard/branding/phone-templates' },
+      { label: 'Phone Provider', path: '/dashboard/branding/phone-provider' },
+    ]
   },
   {
     icon: (
       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-      </svg>
-    ),
-    label: 'Security',
-    path: '/dashboard/security',
-    hasSubmenu: true
-  },
-  {
-    icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-      </svg>
-    ),
-    label: 'Actions',
-    path: '/dashboard/actions',
-    hasSubmenu: true
-  },
-  {
-    icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-      </svg>
-    ),
-    label: 'Event Streams',
-    path: '/dashboard/events',
-    badge: 'EARLY'
-  },
-  {
-    icon: (
-      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <rect x="7" y="13" width="2" height="5" rx="1" fill="#6366F1" />
+        <rect x="11" y="9" width="2" height="9" rx="1" fill="#A5B4FC" />
+        <rect x="15" y="6" width="2" height="12" rx="1" fill="#C7D2FE" />
       </svg>
     ),
     label: 'Monitoring',
     path: '/dashboard/monitoring',
-    hasSubmenu: true
+    hasSubmenu: true,
+    submenuItems: [
+      { label: 'Logs', path: '/dashboard/monitoring/logs' },
+      { label: 'Log Streams', path: '/dashboard/monitoring/log-streams' },
+      { label: 'Action Logs', path: '/dashboard/monitoring/action-logs' },
+    ]
   },
   {
     icon: (
