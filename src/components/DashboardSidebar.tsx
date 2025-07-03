@@ -135,7 +135,24 @@ const menuItems: MenuItem[] = [
     path: '/dashboard/branding',
     hasSubmenu: true,
     submenuItems: [
-      { label: 'Universal Login', path: '/dashboard/branding/universal-login' },
+      {
+        label: 'Universal Login',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/universal-login/customizations/colors',
+        // hasSubmenu: true,
+        // submenuItems: [
+        //   {
+        //     label: 'Customizations',
+        //     path: '/dashboard/au/dev-1md8m8doz8ynfucb/universal-login/customizations/colors',
+        //     hasSubmenu: true,
+        //     submenuItems: [
+        //       {
+        //         label: 'Colors',
+        //         path: '/dashboard/au/dev-1md8m8doz8ynfucb/universal-login/customizations/colors',
+        //       },
+        //     ],
+        //   },
+        // ],
+      },
       { label: 'Custom Domains', path: '/dashboard/branding/custom-domains' },
       { label: 'Email Templates', path: '/dashboard/branding/email-templates' },
       { label: 'Email Provider', path: '/dashboard/branding/email-provider' },
