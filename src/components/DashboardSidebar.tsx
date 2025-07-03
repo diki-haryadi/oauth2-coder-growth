@@ -86,6 +86,14 @@ const menuItems: MenuItem[] = [
         label: 'Authentication Profile',
         path: '/dashboard/authentication/profile',
       },
+      {
+        label: 'Organizations List',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/organizations/list',
+      },
+      {
+        label: 'Create Organization',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/organizations/create',
+      },
     ]
   },
   {
@@ -95,7 +103,7 @@ const menuItems: MenuItem[] = [
       </svg>
     ),
     label: 'Organizations',
-    path: '/dashboard/organizations'
+    path: '/dashboard/au/dev-1md8m8doz8ynfucb/organizations/list'
   },
   {
     icon: (

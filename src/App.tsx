@@ -37,6 +37,9 @@ import SAMLConnectionsPage from './pages/SAMLConnectionsPage';
 import SAMLCreateConnectionPage from './pages/SAMLCreateConnectionPage';
 import PasswordlessConnectionsPage from './pages/PasswordlessConnectionsPage';
 import AuthenticationProfilePage from './pages/AuthenticationProfilePage';
+import OrganizationsListPage from './pages/OrganizationsListPage';
+import OrganizationsCreatePage from './pages/OrganizationsCreatePage';
+import OrganizationsOverviewPage from './pages/OrganizationsOverviewPage';
 
 const App = () => {
   return (
@@ -105,6 +108,9 @@ const App = () => {
             <Route path="au/dev-1md8m8doz8ynfucb/connections/enterprise/saml/create" element={<SAMLCreateConnectionPage />} />
             <Route path="au/dev-1md8m8doz8ynfucb/connections/passwordless" element={<PasswordlessConnectionsPage />} />
             <Route path="authentication/profile" element={<AuthenticationProfilePage />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/organizations/list" element={<OrganizationsListPage />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/organizations/create" element={<OrganizationsCreatePage />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/organizations/:orgId/overview" element={<OrganizationsOverviewPage />} />
           </Route>
 
           
