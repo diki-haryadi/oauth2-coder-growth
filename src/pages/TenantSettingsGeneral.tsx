@@ -13,7 +13,7 @@ const tabs = [
 
 const TenantSettingsGeneral = () => {
   return (
-    <div className="min-h-screen bg-white w-full px-8 py-12">
+    <div className="min-h-screen bg-white w-screen px-8 py-12">
       <div className="max-w-5xl mx-auto">
         <h1 className="text-3xl font-semibold text-gray-900 mb-2">Tenant Settings</h1>
         <TenantSettingsTabs current={tabs[0].route} tabs={tabs} />
@@ -21,7 +21,7 @@ const TenantSettingsGeneral = () => {
         <div className="bg-white border rounded-xl p-8 mb-8">
           <div className="flex justify-between items-center mb-6">
             <div className="font-semibold text-lg text-gray-900 mb-2">Tenant Information</div>
-            <button className="border border-blue-600 text-blue-700 px-4 py-2 rounded font-medium flex items-center gap-2 hover:bg-blue-50">
+            <button className="bg-white border border-blue-600 text-blue-700 px-4 py-2 rounded font-medium flex items-center gap-2 hover:bg-blue-50">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 6h8M8 10h8M8 14h8M8 18h8"/></svg>
               Run Readiness Check
             </button>
@@ -58,7 +58,7 @@ const TenantSettingsGeneral = () => {
               <input className="w-full border border-gray-300 rounded px-3 py-2 mb-6" placeholder="support@my-company.com" />
               <label className="block text-sm font-medium text-gray-700 mb-1">Support URL</label>
               <input className="w-full border border-gray-300 rounded px-3 py-2 mb-6" placeholder="https://my-company.com/support/" />
-              <button className="mt-2 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
+              <button className="bg-white mt-2 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
             </div>
             <div>
               {/* Environment Tag */}
@@ -82,7 +82,7 @@ const TenantSettingsGeneral = () => {
                     <span className="text-xs text-gray-500">The tenant is pointed to a production instance used by your end users. This environment should be treated carefully since it could break your application.</span>
                   </label>
                 </div>
-                <button className="mt-4 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
+                <button className="bg-white mt-4 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
               </div>
               {/* API Authorization Settings, Error Pages, Languages, dsb. (mockup) */}
               <div className="mb-8">
@@ -93,7 +93,7 @@ const TenantSettingsGeneral = () => {
                 <label className="block text-sm font-medium text-gray-700 mb-1">Default Directory</label>
                 <input className="w-full border border-gray-300 rounded px-3 py-2 mb-2" placeholder="Connection Name" />
                 <div className="text-xs text-gray-500 mb-4">Name of the connection to be use for Password Grant exchanges. ...</div>
-                <button className="mt-2 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
+                <button className="bg-white mt-2 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
               </div>
               <div className="mb-8">
                 <div className="font-medium text-gray-900 mb-2">Error Pages</div>
@@ -125,7 +125,7 @@ const TenantSettingsGeneral = () => {
                     </label>
                   ))}
                 </div>
-                <button className="mt-4 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
+                <button className="bg-white mt-4 px-6 py-2 bg-gray-200 text-gray-500 rounded font-medium cursor-not-allowed">Save</button>
               </div>
             </div>
           </div>

@@ -293,7 +293,7 @@ const menuItems: MenuItem[] = [
       </svg>
     ),
     label: 'Settings',
-    path: '/dashboard/settings'
+    path: '/dashboard/au/dev-1md8m8doz8ynfucb/tenant/general'
   },
   
 ];

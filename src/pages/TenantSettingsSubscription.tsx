@@ -12,7 +12,7 @@ const tabs = [
 ];
 
 const TenantSettingsSubscription = () => (
-  <div className="min-h-screen bg-white w-full px-8 py-12">
+  <div className="min-h-screen bg-white w-screen px-8 py-12">
     <div className="max-w-5xl mx-auto">
       <h1 className="text-3xl font-semibold text-gray-900 mb-2">Tenant Settings</h1>
       <TenantSettingsTabs current={tabs[1].route} tabs={tabs} />

@@ -20,7 +20,7 @@ const TenantSettingsTabs: React.FC<TenantSettingsTabsProps> = ({ current, onTabC
         {tabs.map(tab => (
           <li key={tab.route}>
             <button
-              className={`py-3 px-1 text-base font-medium border-b-2 transition-colors ${
+              className={` bg-white py-3 px-1 text-base font-medium border-b-2 transition-colors ${
                 current === tab.route
                   ? 'border-blue-600 text-blue-700'
                   : 'border-transparent text-gray-500 hover:text-blue-700 hover:border-gray-300'
