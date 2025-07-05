@@ -11,6 +11,7 @@ interface MenuItem {
     label: string;
     path: string;
   }[];
+  children?: MenuItem[];
 }
 
 const menuItems: MenuItem[] = [
@@ -134,31 +135,118 @@ const menuItems: MenuItem[] = [
     label: 'Branding',
     path: '/dashboard/branding',
     hasSubmenu: true,
-    submenuItems: [
+    children: [
       {
         label: 'Universal Login',
         path: '/dashboard/au/dev-1md8m8doz8ynfucb/universal-login/customizations/colors',
-        // hasSubmenu: true,
-        // submenuItems: [
-        //   {
-        //     label: 'Customizations',
-        //     path: '/dashboard/au/dev-1md8m8doz8ynfucb/universal-login/customizations/colors',
-        //     hasSubmenu: true,
-        //     submenuItems: [
-        //       {
-        //         label: 'Colors',
-        //         path: '/dashboard/au/dev-1md8m8doz8ynfucb/universal-login/customizations/colors',
-        //       },
-        //     ],
-        //   },
-        // ],
+        icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#6366f1" /></svg>,
       },
-      { label: 'Custom Domains', path: '/dashboard/branding/custom-domains' },
-      { label: 'Email Templates', path: '/dashboard/branding/email-templates' },
-      { label: 'Email Provider', path: '/dashboard/branding/email-provider' },
-      { label: 'Phone Templates', path: '/dashboard/branding/phone-templates' },
-      { label: 'Phone Provider', path: '/dashboard/branding/phone-provider' },
+      {
+        label: 'Custom Domains',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/custom_domains',
+        icon: <svg width="16" height="16"><circle cx="8" cy="8" r="7" fill="#6366f1" /></svg>,
+      },
+      {
+        label: 'Email Templates',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/templates',
+        icon: <svg width="16" height="16"><rect width="16" height="12" y="2" rx="2" fill="#6366f1" /></svg>,
+      },
+      {
+        label: 'Email Provider',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/templates/provider',
+        icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#6366f1" /></svg>,
+      },
+      {
+        label: 'Phone Templates',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/phone/templates',
+        icon: <svg width="16" height="16"><rect width="16" height="10" y="3" rx="2" fill="#6366f1" /></svg>,
+      },
+      {
+        label: 'Phone Provider',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/phone/templates/phone/provider',
+        icon: <svg width="16" height="16"><circle cx="8" cy="8" r="7" fill="#6366f1" /></svg>,
+      },
     ]
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><g><rect x="2.5" y="2.5" width="5" height="5" rx="1.5" fill="#F3F4F6" stroke="#9CA3AF"/><rect x="12.5" y="2.5" width="5" height="5" rx="1.5" fill="#F3F4F6" stroke="#9CA3AF"/><rect x="2.5" y="12.5" width="5" height="5" rx="1.5" fill="#F3F4F6" stroke="#9CA3AF"/><rect x="7.5" y="7.5" width="5" height="5" rx="1.5" fill="#fff" stroke="#6366F1" strokeWidth="1.5"/><rect x="12.5" y="12.5" width="5" height="5" rx="1.5" fill="#F3F4F6" stroke="#9CA3AF"/></g></svg>
+    ),
+    label: 'Security',
+    path: '/dashboard/security',
+    hasSubmenu: true,
+    children: [
+      {
+        label: 'Attack Protection',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/security/attack-protection',
+        icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+        hasSubmenu: true,
+        children: [
+          {
+            label: 'Bot Detection',
+            path: '/dashboard/au/dev-1md8m8doz8ynfucb/security/attack-protection/bot-detection',
+            icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+          },
+          {
+            label: 'Suspicious IP Throttling',
+            path: '/dashboard/au/dev-1md8m8doz8ynfucb/security/attack-protection/suspicious-ip-throttling',
+            icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+          },
+          {
+            label: 'Brute-force Protection',
+            path: '/dashboard/au/dev-1md8m8doz8ynfucb/security/attack-protection/brute-force-protection',
+            icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+          },
+          {
+            label: 'Breached Password Detection',
+            path: '/dashboard/au/dev-1md8m8doz8ynfucb/security/attack-protection/breached-password-detection',
+            icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+          },
+        ],
+      },
+      {
+        label: 'Multi-factor Auth',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/security/mfa',
+        icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+      },
+      {
+        label: 'Monitoring',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/security/monitoring',
+        icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+      },
+    ],
+  },
+  {
+    label: 'Actions',
+    path: '/dashboard/security/actions',
+    hasSubmenu: true,
+    icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+    children: [
+      {
+        label: 'Triggers',
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/actions/triggers',
+        icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+      },
+      {
+        label: 'Forms',
+        path: '/dashboard/security/actions/forms',
+        icon: <svg width="16" height="16"><rect width="16" height="16" rx="3" fill="#E5E7EB" /></svg>,
+      },
+      {
+        label: 'Library',
+        icon: (
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="#F3F4F6"/><rect x="8" y="8" width="8" height="8" rx="2" fill="#111827"/></svg>
+        ),
+        path: '/dashboard/au/dev-1md8m8doz8ynfucb/actions/library?tab=0',
+      },
+    ],
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><g><rect x="2.5" y="2.5" width="5" height="5" rx="1.5" fill="#EEF2FF" stroke="#6366F1"/><rect x="12.5" y="2.5" width="5" height="5" rx="1.5" fill="#EEF2FF" stroke="#6366F1"/><rect x="2.5" y="12.5" width="5" height="5" rx="1.5" fill="#EEF2FF" stroke="#6366F1"/><rect x="7.5" y="7.5" width="5" height="5" rx="1.5" fill="#EEF2FF" stroke="#6366F1"/><rect x="12.5" y="12.5" width="5" height="5" rx="1.5" fill="#EEF2FF" stroke="#6366F1"/></g></svg>
+    ),
+    label: 'Event Streams',
+    path: '/dashboard/au/dev-1md8m8doz8ynfucb/events/event-streams',
   },
   {
     icon: (
@@ -169,13 +257,14 @@ const menuItems: MenuItem[] = [
         <rect x="15" y="6" width="2" height="12" rx="1" fill="#C7D2FE" />
       </svg>
     ),
+    
     label: 'Monitoring',
     path: '/dashboard/monitoring',
     hasSubmenu: true,
     submenuItems: [
-      { label: 'Logs', path: '/dashboard/monitoring/logs' },
-      { label: 'Log Streams', path: '/dashboard/monitoring/log-streams' },
-      { label: 'Action Logs', path: '/dashboard/monitoring/action-logs' },
+      { label: 'Logs', path: '/dashboard/au/dev-1md8m8doz8ynfucb/logs' },
+      { label: 'Log Streams', path: '/dashboard/au/dev-1md8m8doz8ynfucb/log-streams' },
+      { label: 'Action Logs', path: '/dashboard/au/dev-1md8m8doz8ynfucb/action-logs' },
     ]
   },
   {
@@ -185,7 +274,7 @@ const menuItems: MenuItem[] = [
       </svg>
     ),
     label: 'Marketplace',
-    path: '/dashboard/marketplace'
+    path: '/dashboard/au/dev-1md8m8doz8ynfucb/marketplace'
   },
   {
     icon: (
@@ -194,7 +283,7 @@ const menuItems: MenuItem[] = [
       </svg>
     ),
     label: 'Extensions',
-    path: '/dashboard/extensions'
+    path: '/dashboard/au/dev-1md8m8doz8ynfucb/extensions/list'
   },
   {
     icon: (
@@ -205,7 +294,8 @@ const menuItems: MenuItem[] = [
     ),
     label: 'Settings',
     path: '/dashboard/settings'
-  }
+  },
+  
 ];
 
 const DashboardSidebar = () => {
@@ -237,7 +327,12 @@ const DashboardSidebar = () => {
                       <span className={location.pathname.startsWith(item.path) ? 'text-blue-600' : 'text-gray-500'}>
                         {item.icon}
                       </span>
-                      <span>{item.label}</span>
+                      <span className="flex items-center gap-2">
+                        {item.label}
+                        {item.label === 'Event Streams' && (
+                          <span className="ml-1 px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold tracking-widest" style={{letterSpacing:'0.05em'}}>EARLY</span>
+                        )}
+                      </span>
                       <svg 
                         className={`w-4 h-4 ml-auto transition-transform ${
                           openSubmenu === item.label ? 'transform rotate-90' : ''
@@ -249,6 +344,22 @@ const DashboardSidebar = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                       </svg>
                     </button>
+                    {openSubmenu === item.label && item.children && (
+                      <ul className="mt-1 ml-6 space-y-0.5">
+                        {item.children.map((child) => (
+                          <li key={child.label}>
+                            <Link
+                              to={child.path}
+                              className={`block px-2 py-1.5 rounded-md text-[15px] ml-2 transition-colors
+                                ${location.pathname === child.path ? 'text-blue-600 font-semibold bg-blue-50' : 'text-gray-700 hover:bg-gray-50'}
+                              `}
+                            >
+                              <span>{child.label}</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                     {openSubmenu === item.label && item.submenuItems && (
                       <ul className="mt-1 ml-4 space-y-1">
                         {item.submenuItems.map((subItem) => (
@@ -280,12 +391,12 @@ const DashboardSidebar = () => {
                     <span className={location.pathname === item.path ? 'text-blue-600' : 'text-gray-500'}>
                       {item.icon}
                     </span>
-                    <span>{item.label}</span>
-                    {item.badge && (
-                      <span className="ml-auto text-xs bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded">
-                        {item.badge}
-                      </span>
-                    )}
+                    <span className="flex items-center gap-2">
+                      {item.label}
+                      {item.label === 'Event Streams' && (
+                        <span className="ml-1 px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold tracking-widest" style={{letterSpacing:'0.05em'}}>EARLY</span>
+                      )}
+                    </span>
                   </Link>
                 )}
               </li>

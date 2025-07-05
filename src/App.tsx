@@ -44,6 +44,47 @@ import UsersPage from './pages/UsersPage';
 import RolesPage from './pages/RolesPage';
 import RoleSettingsPage from './pages/RoleSettingsPage';
 import UniversalLoginColorsPage from './pages/UniversalLoginColorsPage';
+import CustomDomains from './pages/CustomDomains';
+import EmailTemplates from './pages/EmailTemplates';
+import EmailProvider from './pages/EmailProvider';
+import PhoneTemplates from './pages/PhoneTemplates';
+import PhoneProvider from './pages/PhoneProvider';
+import AttackProtection from './pages/AttackProtection';
+import MultiFactorAuth from './pages/MultiFactorAuth';
+import Monitoring from './pages/Monitoring';
+import Triggers from './pages/Triggers';
+import PreUserRegistrationTrigger from './pages/PreUserRegistrationTrigger';
+import PostUserRegistrationTrigger from './pages/PostUserRegistrationTrigger';
+import BrowseActions from './pages/BrowseActions';
+import PostLoginTrigger from './pages/PostLoginTrigger';
+import SendPhoneMessageTrigger from './pages/SendPhoneMessageTrigger';
+import PasswordResetPostChallengeTrigger from './pages/PasswordResetPostChallengeTrigger';
+import PostChangePasswordTrigger from './pages/PostChangePasswordTrigger';
+import CredentialsExchangeTrigger from './pages/CredentialsExchangeTrigger';
+import Library from './pages/Library';
+import TemplatesLibrary from './pages/TemplatesLibrary';
+import TemplateDetail from './pages/TemplateDetail';
+import EventStreams from './pages/EventStreams';
+import EventStreamNew from './pages/EventStreamNew';
+import EventStreamNewWebhook from './pages/EventStreamNewWebhook';
+import EventStreamNewAWS from './pages/EventStreamNewAWS';
+import Logs from './pages/Logs';
+import LogStreams from './pages/LogStreams';
+import ActionLogs from './pages/ActionLogs';
+import Marketplace from './pages/Marketplace';
+import ExtensionsList from './pages/ExtensionsList';
+import TenantSettingsGeneral from './pages/TenantSettingsGeneral';
+import TenantSettingsSubscription from './pages/TenantSettingsSubscription';
+import TenantSettingsMembers from './pages/TenantSettingsMembers';
+import TenantSettingsCustomDomains from './pages/TenantSettingsCustomDomains';
+import TenantSettingsSigningKeys from './pages/TenantSettingsSigningKeys';
+import TenantSettingsEncryptionKeys from './pages/TenantSettingsEncryptionKeys';
+import TenantSettingsAdvanced from './pages/TenantSettingsAdvanced';
+
+const BotDetection = React.lazy(() => import('./pages/BotDetection'));
+const SuspiciousIPThrottling = React.lazy(() => import('./pages/SuspiciousIPThrottling'));
+const BruteForceProtection = React.lazy(() => import('./pages/BruteForceProtection'));
+const BreachedPasswordDetection = React.lazy(() => import('./pages/BreachedPasswordDetection'));
 
 const App = () => {
   return (
@@ -119,6 +160,46 @@ const App = () => {
             <Route path="au/dev-1md8m8doz8ynfucb/roles" element={<RolesPage />} />
             <Route path="au/dev-1md8m8doz8ynfucb/roles/:roleId/settings" element={<RoleSettingsPage />} />
             <Route path="au/dev-1md8m8doz8ynfucb/universal-login/customizations/colors" element={<UniversalLoginColorsPage />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/custom_domains" element={<CustomDomains />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/templates" element={<EmailTemplates />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/templates/provider" element={<EmailProvider />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/phone/templates" element={<PhoneTemplates />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/phone/templates/phone/provider" element={<PhoneProvider />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/security/attack-protection" element={<AttackProtection />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/security/attack-protection/bot-detection" element={<React.Suspense fallback={null}><BotDetection /></React.Suspense>} />
+            <Route path="au/dev-1md8m8doz8ynfucb/security/attack-protection/suspicious-ip-throttling" element={<React.Suspense fallback={null}><SuspiciousIPThrottling /></React.Suspense>} />
+            <Route path="au/dev-1md8m8doz8ynfucb/security/attack-protection/brute-force-protection" element={<React.Suspense fallback={null}><BruteForceProtection /></React.Suspense>} />
+            <Route path="au/dev-1md8m8doz8ynfucb/security/attack-protection/breached-password-detection" element={<React.Suspense fallback={null}><BreachedPasswordDetection /></React.Suspense>} />
+            <Route path="au/dev-1md8m8doz8ynfucb/security/mfa" element={<MultiFactorAuth />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/security/monitoring" element={<Monitoring />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers" element={<Triggers />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers/pre-user-registration" element={<PreUserRegistrationTrigger />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers/post-user-registration" element={<PostUserRegistrationTrigger />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/library/actions/packaged" element={<BrowseActions />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers/post-login" element={<PostLoginTrigger />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers/send-phone-message" element={<SendPhoneMessageTrigger />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers/password-reset-post-challenge" element={<PasswordResetPostChallengeTrigger />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers/post-change-password" element={<PostChangePasswordTrigger />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/triggers/credentials-exchange" element={<CredentialsExchangeTrigger />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/library" element={<Library />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/library/templates" element={<TemplatesLibrary />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/actions/library/templates/templates/:id" element={<TemplateDetail />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/events/event-streams" element={<EventStreams />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/events/event-streams/new" element={<EventStreamNew />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/events/event-streams/new/webhook" element={<EventStreamNewWebhook />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/events/event-streams/new/aws" element={<EventStreamNewAWS />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/logs" element={<Logs />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/log-streams" element={<LogStreams />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/action-logs" element={<ActionLogs />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/marketplace" element={<Marketplace />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/extensions/list" element={<ExtensionsList />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/tenant/general" element={<TenantSettingsGeneral />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/tenant/billing/subscription" element={<TenantSettingsSubscription />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/tenant/admins" element={<TenantSettingsMembers />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/tenant/custom_domains" element={<TenantSettingsCustomDomains />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/tenant/signing_keys" element={<TenantSettingsSigningKeys />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/tenant/encryption_keys" element={<TenantSettingsEncryptionKeys />} />
+            <Route path="au/dev-1md8m8doz8ynfucb/tenant/advanced" element={<TenantSettingsAdvanced />} />
           </Route>
 
           

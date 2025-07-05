@@ -1,0 +1,586 @@
+{
+    "total": 46,
+    "templates": [
+        {
+            "id": "f246bbc7-6676-4a30-9706-bd328e7f9ac4",
+            "createdAt": "2023-11-29T18:32:22.985Z",
+            "updatedAt": "2025-04-01T15:20:31.214Z",
+            "name": "Add Email to Access Token",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ENRICH_PROFILE"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Add the users email as one of the fields in the access token",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/add-email-to-access-token-POST_LOGIN",
+            "code": "// --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/add-email-to-access-token-POST_LOGIN ---\n/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // This action adds the authenticated user's email address to the access token.\n\n    let namespace = event.secrets.NAMESPACE || '';\n    if (namespace && !namespace.endsWith('/')) {\n        namespace += '/';\n    }\n\n    api.accessToken.setCustomClaim(namespace + 'email', event.user.email);\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "**Optional Secrets**\n\n* `NAMESPACE` - optional namespace for the access token field, for example `https://acme-inc.com` would result in an access token that looks like: `{ ... \"https://acme-inc.com/email\": \"user@acme-email.com\" ... }`\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "33f740c8-9a8e-4886-be63-83afb6ef40cc",
+            "createdAt": "2023-11-29T20:53:41.547Z",
+            "updatedAt": "2025-04-01T15:20:31.280Z",
+            "name": "Confirm Email is Verified",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Confirm user email is verified before completing login",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/email-verified-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/email-verified-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    if (!event.user.email_verified) {\n        api.access.deny('Please verify your email before logging in.');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": null,
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "365115c1-c962-4769-a6c5-851c4494cc0d",
+            "createdAt": "2023-11-30T15:33:45.445Z",
+            "updatedAt": "2025-04-01T15:20:31.323Z",
+            "name": "Require MFA once per session",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "MULTIFACTOR"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Avoid prompting a user for multifactor authentication if they have successfully completed MFA in their current session. This is particularly useful when performing silent authentication (`prompt=none`) to renew short-lived access tokens in a SPA (Single Page Application) during the duration of a user session without having to rely on setting `allowRememberBrowser` to `true`.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/require-mfa-once-per-session-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/require-mfa-once-per-session-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // if the array of authentication methods is valid and contains a method named 'mfa', mfa has been done in this session already\n    if (\n        !event.authentication ||\n        !Array.isArray(event.authentication.methods) ||\n        !event.authentication.methods.find((method) => method.name === 'mfa')\n    ) {\n        api.multifactor.enable('any');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "# Notes\n* This action code requires at least one factor to be enabled for your tenant.\n  * For more information please see [Enable Multi-Factor Authentication](https://auth0.com/docs/secure/multi-factor-authentication/enable-mfa).\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "0ec391ed-9eb5-4eba-99b6-a054f1aefbfa",
+            "createdAt": "2023-11-30T16:39:57.325Z",
+            "updatedAt": "2025-04-01T15:20:31.313Z",
+            "name": "Show how to check for variables in the querystring",
+            "triggers": [
+                "PASSWORD_RESET_POST_CHALLENGE"
+            ],
+            "useCases": [
+                "ENRICH_PROFILE"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Checks if the password reset transaction includes a query variable from the QUERY_KEY secret matching a value set in the QUERY_VALUE secret",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/querystring-PASSWORD_RESET_POST_CHALLENGE",
+            "code": "/**\n * Handler that will be called during the execution of a Password Reset / Post Challenge Flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/querystring-PASSWORD_RESET_POST_CHALLENGE ---\n *\n * @param {Event} event - Details about the post challenge request.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\nexports.onExecutePostChallenge = async (event, api) => {\n    // ensure the stored query key name is valid\n    if (!event.secrets.QUERY_KEY) {\n        return api.access.deny('Invalid configuration');\n    }\n    // ensure the stored query key value is valid\n    if (!event.secrets.QUERY_VALUE) {\n        return api.access.deny('Invalid configuration');\n    }\n    // this is a generic example of accessing the query string\n    const queryValue = event.request.query[event.secrets.QUERY_KEY];\n    if (queryValue === event.secrets.QUERY_VALUE) {\n        // this is a specific PASSWORD_RESET_POST_CHALLENGE example of using the query string to trigger setting custom claims\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostChallenge function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\n// exports.onContinuePostChallenge = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `QUERY_KEY` - the query parameter name that will be evaluated to invoke custom code\n* `QUERY_VALUE` - the query parameter value that must be matched to invoke custom code\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "45c70d47-761c-4b78-9c80-17ff347dc1ce",
+            "createdAt": "2023-11-30T16:39:57.522Z",
+            "updatedAt": "2025-04-01T15:20:31.319Z",
+            "name": "Show how to check for variables in the querystring",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ENRICH_PROFILE"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Checks if the login transaction includes a query variable from the QUERY_KEY secret matching a value set in the QUERY_VALUE secret and if it does, it will add an attribute named by the value of EXAMPLE_CUSTOM_CLAIM_NAME and a value of EXAMPLE_CUSTOM_CLAIM_VALUE to the user profile.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/querystring-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/querystring-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // ensure the query key is valid\n    if (!event.secrets.QUERY_KEY) {\n        return api.access.deny('Invalid configuration');\n    }\n    //ensure the query value is valid\n    if (!event.secrets.QUERY_VALUE) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // this is a generic example of accessing the query string\n    const queryValue = event.request.query[event.secrets.QUERY_KEY];\n    if (queryValue === event.secrets.QUERY_VALUE) {\n        // this is a specific POST_LOGIN example of using the query string to trigger setting custom claims\n        const {\n            CUSTOM_CLAIM_NAME: customClaimName,\n            CUSTOM_CLAIM_VALUE: customClaimValue,\n        } = event.secrets;\n        // ensure the custom claim name secret is valid\n        if (!customClaimName) {\n            return api.access.deny('Invalid configuration');\n        }\n        // ensure the custom claim value is valid\n        if (!customClaimValue) {\n            return api.access.deny('Invalid configuration');\n        }\n        api.idToken.setCustomClaim(customClaimName, customClaimValue);\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `QUERY_KEY` - the query parameter name that will be evaluated to set the custom claim\n* `QUERY_VALUE` - the query parameter value that must be matched to set the custom claim\n* `CUSTOM_CLAIM_NAME` - the custom claim name\n* `CUSTOM_CLAIM_VALUE` - the custom claim value\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "a3a3caf7-4d96-439a-b5dd-1069c4ad0eed",
+            "createdAt": "2023-11-30T18:15:17.070Z",
+            "updatedAt": "2025-04-01T15:20:31.353Z",
+            "name": "Simple User Allowlist",
+            "triggers": [
+                "PASSWORD_RESET_POST_CHALLENGE"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow access to a specific list of users",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-PASSWORD_RESET_POST_CHALLENGE",
+            "code": "// --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-PASSWORD_RESET_POST_CHALLENGE ---\n/**\n * Handler that will be called during the execution of a Password Reset / Post Challenge Flow.\n *\n * @param {Event} event - Details about the post challenge request.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\nexports.onExecutePostChallenge = async (event, api) => {\n    if (!event.secrets.ALLOWED_USER_EMAILS) {\n        return api.access.deny('missing allowed user emails');\n    }\n\n    // Access should only be granted to verified users.\n    if (!event.user.email || !event.user.email_verified) {\n        return api.access.deny('access denied.');\n    }\n\n    const allowedUsers = event.secrets.ALLOWED_USER_EMAILS.split(',')\n        .map((email) => email.trim())\n        .filter((email) => !!email);\n    const userHasAccess = allowedUsers.some(\n        (email) => email === event.user.email\n    );\n\n    if (!userHasAccess) {\n        return api.access.deny('access denied.');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostChallenge function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\n// exports.onContinuePostChallenge = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "**Requird Secrets**\n\n* ALLOWED_USER_EMAILS - comma separated list of allowed user emails\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "a14b414a-ebfd-4df3-bfbb-7e10fff90cdc",
+            "createdAt": "2023-11-30T18:15:17.575Z",
+            "updatedAt": "2025-04-01T15:20:31.356Z",
+            "name": "Simple User Allowlist",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow access to a specific list of users",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-POST_LOGIN",
+            "code": "// --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-POST_LOGIN ---\n/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    if (!event.secrets.ALLOWED_USER_EMAILS) {\n        return api.access.deny('missing allowed user emails');\n    }\n\n    // Access should only be granted to verified users.\n    if (!event.user.email || !event.user.email_verified) {\n        return api.access.deny('access denied.');\n    }\n\n    const allowedUsers = event.secrets.ALLOWED_USER_EMAILS.split(',')\n        .map((email) => email.trim())\n        .filter((email) => !!email);\n    const userHasAccess = allowedUsers.some(\n        (email) => email === event.user.email\n    );\n\n    if (!userHasAccess) {\n        return api.access.deny('access denied.');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "**Requird Secrets**\n\n* ALLOWED_USER_EMAILS - comma separated list of allowed user emails\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "d2a3e1d7-e2ef-4681-8192-cdcac078b7df",
+            "createdAt": "2023-11-30T19:14:42.309Z",
+            "updatedAt": "2025-04-01T15:20:31.195Z",
+            "name": "Trigger multi-factor authentication when a condition is met",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "MULTIFACTOR"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "A POST_LOGIN action to trigger multifactor authentication based on risk assessment and if the user is enrolled in at least one factor.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/adaptive-mfa-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/adaptive-mfa-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // Decide which confidence scores should trigger MFA, for more information refer to\n    // https://auth0.com/docs/secure/multi-factor-authentication/adaptive-mfa/customize-adaptive-mfa#confidence-scores\n    const promptConfidences = ['low', 'medium'];\n\n    // Example condition: prompt MFA only based on the NewDevice\n    // confidence level, this will prompt for MFA when a user is logging in\n    // from an unknown device.\n    const confidence =\n        event.authentication?.riskAssessment?.assessments?.NewDevice\n            ?.confidence;\n    const shouldPromptMfa =\n        confidence && promptConfidences.includes(confidence);\n\n    // It only makes sense to prompt for MFA when the user has at least one\n    // enrolled MFA factor.\n    const canPromptMfa =\n        event.user.multifactor && event.user.multifactor.length > 0;\n    if (shouldPromptMfa && canPromptMfa) {\n        api.multifactor.enable('any', { allowRememberBrowser: true });\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": null,
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "2af5b91a-be49-49ba-9dcc-934f4bd6dd8f",
+            "createdAt": "2023-11-30T19:31:43.924Z",
+            "updatedAt": "2025-04-01T15:20:31.332Z",
+            "name": "SAML Attributes Mapping",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ENRICH_PROFILE"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "In a SAML application, customize the mapping between the Auth0 user and the SAML attributes",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/saml-attribute-mapping-POST_LOGIN",
+            "code": "// --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/saml-attribute-mapping-POST_LOGIN ---\n/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    api.samlResponse.setAttribute(\n        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier',\n        event.user.user_id\n    );\n\n    if (event.user.email) {\n        api.samlResponse.setAttribute(\n            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',\n            event.user.email\n        );\n    }\n\n    if (event.user.name) {\n        api.samlResponse.setAttribute(\n            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name',\n            event.user.name\n        );\n    }\n\n    // example of mapping a user metadata field\n    // api.samlResponse.setAttribute('http://schemas.xmlsoap.org/ws/2005/05/identity/claims/food', event.user.user_metadata.favorite_food);\n\n    // an example of mapping an app metadata field\n    // api.samlResponse.setAttribute('http://schemas.xmlsoap.org/ws/2005/05/identity/claims/address', event.user.app_metadata.shipping_address);\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": null,
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "dca2e879-7380-41de-b683-063e9e9fd28e",
+            "createdAt": "2023-11-30T20:37:03.968Z",
+            "updatedAt": "2025-04-01T15:20:31.360Z",
+            "name": "Allowlist for a Specific App",
+            "triggers": [
+                "PASSWORD_RESET_POST_CHALLENGE"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow specific users access to an app",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-for-app-PASSWORD_RESET_POST_CHALLENGE",
+            "code": "/**\n * Handler that will be called during the execution of a Password Reset / Post Challenge Flow.\n *\n * @param {Event} event - Details about the post challenge request.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-for-app-PASSWORD_RESET_POST_CHALLENGE ---\n */\nexports.onExecutePostChallenge = async (event, api) => {\n    if (!event.secrets.ALLOWED_CLIENT_ID) {\n        return api.access.deny('missing allowed client id');\n    }\n\n    if (!event.secrets.ALLOWED_USER_EMAILS) {\n        return api.access.deny('missing allowed user emails');\n    }\n\n    // Access should only be granted to verified users.\n    if (!event.user.email || !event.user.email_verified) {\n        return api.access.deny('access denied.');\n    }\n\n    // only enforce for event.secrets.ALLOWED_CLIENT_ID\n    // bypass this rule for all other apps\n    if (event.client.client_id !== event.secrets.ALLOWED_CLIENT_ID) {\n        return;\n    }\n\n    const allowedUsers = event.secrets.ALLOWED_USER_EMAILS.split(',')\n        .map((email) => email.trim())\n        .filter((email) => !!email);\n    const userHasAccess = allowedUsers.some(\n        (email) => email === event.user.email\n    );\n\n    if (!userHasAccess) {\n        return api.access.deny('access denied.');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostChallenge function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\n// exports.onContinuePostChallenge = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "**Requird Secrets**\n* `ALLOWED_CLIENT_ID` - client id to allow access for\n* `ALLOWED_USER_EMAILS` - comma separated list of user emails to allow access for\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "26ed2851-dc1f-42f3-b131-03747770ed1c",
+            "createdAt": "2023-11-30T20:37:04.325Z",
+            "updatedAt": "2025-04-01T15:20:31.363Z",
+            "name": "Allowlist for a Specific App",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow specific users access to an app",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-for-app-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-for-app-POST_LOGIN ---\n */\nexports.onExecutePostLogin = async (event, api) => {\n    if (!event.secrets.ALLOWED_CLIENT_ID) {\n        return api.access.deny('missing allowed client id');\n    }\n\n    if (!event.secrets.ALLOWED_USER_EMAILS) {\n        return api.access.deny('missing allowed user emails');\n    }\n\n    // Access should only be granted to verified users.\n    if (!event.user.email || !event.user.email_verified) {\n        return api.access.deny('access denied.');\n    }\n\n    // only enforce for event.secrets.ALLOWED_CLIENT_ID\n    // bypass this rule for all other apps\n    if (event.client.client_id !== event.secrets.ALLOWED_CLIENT_ID) {\n        return;\n    }\n\n    const allowedUsers = event.secrets.ALLOWED_USER_EMAILS.split(',')\n        .map((email) => email.trim())\n        .filter((email) => !!email);\n    const userHasAccess = allowedUsers.some(\n        (email) => email === event.user.email\n    );\n\n    if (!userHasAccess) {\n        return api.access.deny('access denied.');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "**Requird Secrets**\n* `ALLOWED_CLIENT_ID` - client id to allow access for\n* `ALLOWED_USER_EMAILS` - comma separated list of user emails to allow access for\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "5b524ee4-1d82-4671-811c-5bea1f3eede3",
+            "createdAt": "2023-11-30T20:58:38.989Z",
+            "updatedAt": "2025-04-01T15:20:31.328Z",
+            "name": "Set roles to a user",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Add roles to a user based on an arbitrary pattern.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/role-creation-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/role-creation-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // Roles should only be set to verified users.\n    if (!event.user.email || !event.user.email_verified) {\n        return api.access.deny('access denied');\n    }\n\n    // get the special role name, value, and users to which should be granted.\n    const specialName = event.secrets.SPECIAL_ROLE_NAME;\n    if (!specialName) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // get the special role values and ensure they are valid\n    const specialValues = event.secrets.SPECIAL_ROLE_VALUE?.split(',').map(\n        (v) => v.trim()\n    );\n    if (!specialValues) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // get the special role users, ensuring they are valid\n    const specialRoleUsers = event.secrets.SPECIAL_ROLE_USERS?.split(',').map(\n        (u) => u.trim()\n    );\n    if (!specialRoleUsers) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // if this user is a special user set their custom claim\n    if (specialRoleUsers.includes(event.user.email)) {\n        api.idToken.setCustomClaim(specialName, specialValues);\n        api.accessToken.setCustomClaim(specialName, specialValues);\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `SPECIAL_ROLE_NAME` - the name of the special role claim.\n* `SPECIAL_ROLE_VALUE` - comma-delimited list of special roles\n* `SPECIAL_ROLE_USERS` - comma-delimited list of users who should be assigned the special role claim\n\n**Notes**\n\n* Custom claims must be named appropriately.\n  * For more information on restrictions, please see [General restrictions](https://auth0.com/docs/secure/tokens/json-web-tokens/create-custom-claims#general-restrictions)\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "fd8e30ba-02e2-4648-8d89-78bc10425ab4",
+            "createdAt": "2023-11-30T21:43:16.105Z",
+            "updatedAt": "2025-04-01T15:20:31.190Z",
+            "name": "Check if a user belongs to an active directory group.",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Check if a user belongs to an AD group and if not, deny access.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/active-directory-groups-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/active-directory-groups-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // ensure that the allowed group is configured\n    const groupAllowed = event.secrets.ALLOWED_GROUP;\n    if (!groupAllowed) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // get the users groups\n    let groups = event.user.groups || [];\n    if (!Array.isArray(groups)) {\n        groups = [groups];\n    }\n\n    // if the allowed group is not one of the users, deny access\n    if (!groups.includes(groupAllowed)) {\n        return api.access.deny('Access denied');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `ALLOWED_GROUP` - the name of the allowed group.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "c9fa1544-b8bd-4211-950e-3c6ba2a946f4",
+            "createdAt": "2023-11-30T22:05:28.175Z",
+            "updatedAt": "2025-04-01T15:20:31.178Z",
+            "name": "Check if a user belongs to an active directory group.",
+            "triggers": [
+                "PASSWORD_RESET_POST_CHALLENGE"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Check if a user belongs to an AD group and if not, deny access.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/active-directory-groups-PASSWORD_RESET_POST_CHALLENGE",
+            "code": "/**\n * Handler that will be called during the execution of a Password Reset / Post Challenge Flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/active-directory-groups-PASSWORD_RESET_POST_CHALLENGE ---\n *\n * @param {Event} event - Details about the post challenge request.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\nexports.onExecutePostChallenge = async (event, api) => {\n    // ensure that the allowed group is configured\n    const groupAllowed = event.secrets.ALLOWED_GROUP;\n    if (!groupAllowed) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // get the users groups\n    let groups = event.user.groups || [];\n    if (!Array.isArray(groups)) {\n        groups = [groups];\n    }\n\n    // if the allowed group is not one of the users, deny access\n    if (!groups.includes(groupAllowed)) {\n        return api.access.deny('Access denied');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostChallenge function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\n// exports.onContinuePostChallenge = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `ALLOWED_GROUP` - the name of the allowed group.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "7950292f-81ee-41f4-9e4d-5dfabd49f882",
+            "createdAt": "2023-12-01T15:06:06.369Z",
+            "updatedAt": "2025-04-01T15:20:31.370Z",
+            "name": "Simple User Allow List on a Connection",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Allow access to certain users coming from a specific connection",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-on-a-connection-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/simple-user-allowlist-on-a-connection-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // ensure allowed connection list secret is valid\n    if (!event.secrets.ALLOW_LIST_CONNECTION) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // ensure allowed user email list is valid\n    if (!event.secrets.ALLOW_USER_EMAILS) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // access should only be granted to verified users\n    if (!event.user.email || !event.user.email_verified) {\n        return api.access.deny('Access denied.');\n    }\n    // require allow list validation for the configured connection\n    if (event.secrets.ALLOW_LIST_CONNECTION === event.connection.name) {\n        // determine if this user is in the allowed user email list\n        const userHasAccess = event.secrets.ALLOW_USER_EMAILS.split(',').some(\n            (email) => email.trim() === event.user.email\n        );\n        // if they are not in the allowed list then deny access\n        if (!userHasAccess) {\n            return api.access.deny('Access denied.');\n        }\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `ALLOW_LIST_CONNECTION` - the name of the connection against which accounts will be validated, eg: `Username-Password-Authentication`\n* `ALLOW_USER_EMAILS` - a comma-delimited list of allowed email addresses\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "85e0b92c-c4e6-4f26-bb98-bf5f41423b93",
+            "createdAt": "2023-12-01T15:28:55.067Z",
+            "updatedAt": "2025-04-01T15:20:31.336Z",
+            "name": "SAML Configuration",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ENRICH_PROFILE"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Programatically add fields to your SAML configuration.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/saml-configuration-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/saml-configuration-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    if (!event.secrets.CLIENT_ID) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    if (!event.secrets.SAML_AUD) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    if (!event.secrets.SAML_RECIPIENT) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    if (!event.secrets.SAML_DESTINATION) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    if (!event.secrets.SAML_LIFETIME_SEC) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    if (event.client.client_id === event.secrets.CLIENT_ID) {\n        api.samlResponse.setAudience(event.secrets.SAML_AUD);\n        api.samlResponse.setRecipient(event.secrets.SAML_RECIPIENT);\n        api.samlResponse.setDestination(event.secrets.SAML_DESTINATION);\n        api.samlResponse.setLifetimeInSeconds(\n            Number(event.secrets.SAML_LIFETIME_SEC)\n        );\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "**Secrets**\n\n* `CLIENT_ID` - the client ID of your IDP\n* `SAML_AUD` - the audience, for example `urn:auth0:{yourTenant}:{yourConnectionName}`\n* `SAML_RECIPIENT` - the recipient, for example `https://{yourTenant}.us.auth0.com/login/callback?connection={yourConnectionName}\n* `SAML_DESTINATION` - the destination, for example `https://{yourTenant}.us.auth0.com/login/callback?connection={yourConnectionName}\n* `SAML_LIFETIME_SEC` - the expiration in seconds\n\n**Notes**\n\n* Requires a tenant configured as an IdP with the SAML Addon.\n  * For more information see [Test SAML SSO with Auth0 as Service Provider and Identity Provider](https://auth0.com/docs/authenticate/protocols/saml/saml-configuration/configure-auth0-as-service-and-identity-provider)\n* Requires sound and valid values for your audience, recipient, destination and lifetime.\n  * For more information see [this documentation page](https://auth0.com/docs/saml-configuration#configuration-options)\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "5b683a11-c2a2-48cf-b64a-f953a6e2b16e",
+            "createdAt": "2023-12-01T15:38:15.052Z",
+            "updatedAt": "2025-04-01T15:20:31.244Z",
+            "name": "Check Last Password Reset",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Check how long it has been since the users password has been reset and deny access if it is beyond a configured threshold.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/check-last-password-reset-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/check-last-password-reset-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // ensure the secret is valid\n    if (!event.secrets.MAX_PASSWORD_DAYS) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // function to calculate the difference (in days) between two dates\n    const daydiff = (first, second) => (second - first) / (1000 * 60 * 60 * 24);\n\n    // capture the teimstamp of the last password change or account creation\n    const lastPasswordChange =\n        event.user.last_password_reset || event.user.created_at;\n\n    // ensure password rotation is configured correctly\n    let maxDays;\n    try {\n        maxDays = Number(event.secrets.MAX_PASSWORD_DAYS);\n    } catch {\n        return api.access.deny('Invalid configuration');\n    }\n    if (!maxDays) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // if the password is beyond the configured threshold, reject access with a message to change it\n    if (daydiff(new Date(lastPasswordChange), new Date()) > maxDays) {\n        return api.access.deny('please change your password');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `MAX_PASSWORD_DAYS` - maximum age of a user password in days.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "06975b69-6433-4918-98a1-3779f084b21d",
+            "createdAt": "2023-12-01T18:18:10.693Z",
+            "updatedAt": "2025-04-01T15:20:31.200Z",
+            "name": "Add an attribute to the user",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ENRICH_PROFILE"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Add an attribute to the user only for the login transaction. This is useful for cases where you want to enrich the user information for a specific application.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/add-attribute-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/add-attribute-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // ensure the connection secret is valid\n    if (!event.secrets.CONNECTION_NAME) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // ensure the claim name secret is valid\n    if (!event.secrets.CLAIM_NAME) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // add an additional claim conditionally\n    if (event.connection.name === event.secrets.CONNECTION_NAME) {\n        api.idToken.setCustomClaim(event.secrets.CLAIM_NAME, true);\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `CONNECTION_NAME` - the name of the connection from which users will have a custom claim added. For example, `Username-Password-Authentication`.\n* `CLAIM_NAME` - the name of the custom claim to be added.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "15907f76-1d60-439d-bdc1-3d0514650cd7",
+            "createdAt": "2023-12-01T18:18:12.377Z",
+            "updatedAt": "2025-04-01T15:20:31.295Z",
+            "name": "Only allow access from a specific IP address",
+            "triggers": [
+                "CREDENTIALS_EXCHANGE"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow access from a specific IP address",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-CREDENTIALS_EXCHANGE",
+            "code": "/**\n * Handler that will be called during the execution of a Client Credentials exchange.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-CREDENTIALS_EXCHANGE ---\n *\n * @param {Event} event - Details about client credentials grant request.\n * @param {CredentialsExchangeAPI} api - Interface whose methods can be used to change the behavior of client credentials grant.\n */\nexports.onExecuteCredentialsExchange = async (event, api) => {\n    // obtain the list of allowed IPs\n    const ips = event.secrets.ALLOW_LIST?.split(',');\n    if (!ips) {\n        return api.access.deny('server_error', 'Invalid configuration');\n    }\n\n    // ensure the request IP is from an allowed IP address\n    if (!ips.includes(event.request.ip)) {\n        return api.access.deny(\n            'invalid_request',\n            'Access denied for this IP address'\n        );\n    }\n};\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `ALLOW_LIST` - comma-delimited list of allowed IP addresses.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "f637671e-bf17-4563-bbcc-3d06850e685b",
+            "createdAt": "2023-12-01T18:18:12.585Z",
+            "updatedAt": "2025-04-01T15:20:31.298Z",
+            "name": "Only allow access from a specific IP address",
+            "triggers": [
+                "PASSWORD_RESET_POST_CHALLENGE"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow access from a specific IP address",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-PASSWORD_RESET_POST_CHALLENGE",
+            "code": "/**\n * Handler that will be called during the execution of a Password Reset / Post Challenge Flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-PASSWORD_RESET_POST_CHALLENGE ---\n *\n * @param {Event} event - Details about the post challenge request.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\nexports.onExecutePostChallenge = async (event, api) => {\n    // obtain the list of allowed IPs\n    const ips = event.secrets.ALLOW_LIST?.split(',');\n    if (!ips) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // ensure the request IP is from an allowed IP address\n    if (!ips.includes(event.request.ip)) {\n        return api.access.deny('Access denied for this IP address');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostChallenge function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PasswordResetPostChallengeAPI} api - Interface whose methods can be used to change the behavior of the post challenge flow.\n */\n// exports.onContinuePostChallenge = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `ALLOW_LIST` - comma-delimited list of allowed IP addresses.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "f1caa9b5-9122-4fb3-acd8-a2529f247f2f",
+            "createdAt": "2023-12-01T18:18:12.776Z",
+            "updatedAt": "2025-04-01T15:20:31.302Z",
+            "name": "Only allow access from a specific IP address",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow access from a specific IP address",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    // obtain the list of allowed IPs\n    const ips = event.secrets.ALLOW_LIST?.split(',');\n    if (!ips) {\n        return api.access.deny('Invalid configuration');\n    }\n\n    // ensure the request IP is from an allowed IP address\n    if (!ips.includes(event.request.ip)) {\n        return api.access.deny('Access denied for this IP address');\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "**Secrets**\n\n* `ALLOW_LIST` - comma-delimited list of allowed IP addresses.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "dd3e7967-33b2-4b55-845b-de24ae7989aa",
+            "createdAt": "2023-12-01T18:18:12.978Z",
+            "updatedAt": "2025-04-01T15:20:31.305Z",
+            "name": "Only allow access from a specific IP address",
+            "triggers": [
+                "PRE_USER_REGISTRATION"
+            ],
+            "useCases": [
+                "ACCESS_CONTROL"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Only allow access from a specific IP address",
+            "version": null,
+            "runtime": "node18",
+            "secrets": [
+                {
+                    "label": "ALLOW_LIST",
+                    "defaultValue": "ALLOWED,IP,ADDRESSES"
+                }
+            ],
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-PRE_USER_REGISTRATION",
+            "code": "/**\n * Handler that will be called during the execution of a PreUserRegistration flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/ip-address-allowlist-PRE_USER_REGISTRATION ---\n *\n * @param {Event} event - Details about the context and user that is attempting to register.\n * @param {PreUserRegistrationAPI} api - Interface whose methods can be used to change the behavior of the signup.\n */\nexports.onExecutePreUserRegistration = async (event, api) => {\n    // obtain the list of allowed IPs\n    const ips = event.secrets.ALLOW_LIST?.split(',');\n    if (!ips) {\n        // special note for this flow: userMessage (the second parameter) is displayed to the user.\n        return api.access.deny('IP not allowed', 'Invalid configuration');\n    }\n\n    // ensure the request IP is from an allowed IP address\n    if (!ips.includes(event.request.ip)) {\n        // special note for this flow: userMessage (the second parameter) is displayed to the user.\n        return api.access.deny(\n            'IP not allowed',\n            'Access denied for this IP address'\n        );\n    }\n};\n",
+            "modules": [],
+            "notes": null,
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "57f91526-e358-4d08-84e5-c18931948b84",
+            "createdAt": "2023-12-01T18:18:13.186Z",
+            "updatedAt": "2025-04-01T15:20:31.309Z",
+            "name": "Require MFA Enrollment",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "MULTIFACTOR"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "Requires that any user not already enrolled in MFA will be presented with an enrollment prompt on their next login.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/mfa-require-enrollment-POST_LOGIN",
+            "code": "/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/mfa-require-enrollment-POST_LOGIN ---\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    if (!event.user.multifactor?.length) {\n        api.multifactor.enable('any', { allowRememberBrowser: false });\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": [],
+            "notes": "# Notes\n This action requires that any user not already enrolled in MFA will be presented with an\n enrollment prompt on their next login.\n\n This action can be paired with the Adaptive MFA feature that prompts for an MFA challenge only\n when the login confidence is low. It can also be combined with another custom action that prompts\n for an MFA challenge under a custom condition.\n\n Use of the Adaptive MFA feature requires an add-on for the Enterprise plan. Please contact sales\n with any questions. See our Adaptive MFA documentation at https://auth0.com/docs/mfa/adaptive-mfa\n for more information.\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        },
+        {
+            "id": "c8d3367c-dcdb-41e1-a303-4063d2a1d124",
+            "createdAt": "2023-12-01T19:14:26.141Z",
+            "updatedAt": "2025-04-01T15:20:31.209Z",
+            "name": "Add country to User Profile",
+            "triggers": [
+                "POST_LOGIN"
+            ],
+            "useCases": [
+                "ENRICH_PROFILE"
+            ],
+            "public": true,
+            "deleted": false,
+            "description": "This action template adds a `country` attribute to the user's id token based on their ip address.",
+            "version": null,
+            "runtime": "node18",
+            "secrets": null,
+            "config": null,
+            "sourceUrl": "https://github.com/auth0/opensource-marketplace/blob/main/templates/add-country-POST_LOGIN",
+            "code": "// --- AUTH0 ACTIONS TEMPLATE https://github.com/auth0/opensource-marketplace/blob/main/templates/add-country-POST_LOGIN ---\n/**\n * Handler that will be called during the execution of a PostLogin flow.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\nexports.onExecutePostLogin = async (event, api) => {\n    let namespace = event.secrets.ID_TOKEN_NAMESPACE || '';\n    if (namespace && !namespace.endsWith('/')) {\n        namespace += '/';\n    }\n\n    if (event.request.geoip) {\n        api.idToken.setCustomClaim(\n            namespace + 'country',\n            event.request.geoip.countryName\n        );\n        api.idToken.setCustomClaim(\n            namespace + 'timezone',\n            event.request.geoip.timeZone\n        );\n    }\n};\n\n/**\n * Handler that will be invoked when this action is resuming after an external redirect. If your\n * onExecutePostLogin function does not perform a redirect, this function can be safely ignored.\n *\n * @param {Event} event - Details about the user and the context in which they are logging in.\n * @param {PostLoginAPI} api - Interface whose methods can be used to change the behavior of the login.\n */\n// exports.onContinuePostLogin = async (event, api) => {\n// };\n",
+            "modules": null,
+            "notes": "**Optional Secrets**\n\n* `ID_TOKEN_NAMESPACE` - An optional namespace for the custom claim\n",
+            "partnerId": "c5f22cf8-7d96-44bf-aa2e-351c1060e06a"
+        }
+    ]
+}
